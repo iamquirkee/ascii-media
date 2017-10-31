@@ -7,7 +7,7 @@
   <title>Ascii Media</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./styles/styles.css">
 </head>
 </head>
 
@@ -18,23 +18,26 @@
 
   <!-- Image -->
   <video id="main" class="video" controls loop>
-    <source src="test/movie.webm" type='video/webm; codecs="vp8, vorbis"' />
-    <source src="test/movie.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-    <source src="test/movie.ogv" type='video/ogg; codecs="theora, vorbis"' /> Your browser does not support video
+    <source src="./video/test/movie.webm" type='video/webm; codecs="vp8, vorbis"' />
+    <source src="./video/test/movie.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+    <source src="./video/test/movie.ogv" type='video/ogg; codecs="theora, vorbis"' /> Your browser does not support video
   </video>
 
   <!-- Generated -->
   <pre id="ascii"></pre>
 
-
-  <script src="js/mediaDevicePolyfill.js"></script>
-  <script src="js/ASCII.js"></script>
+  <script src="./js/mediaDevicePolyfill.js"></script>
+  <script src="./js/ASCII.js"></script>
   
   <script>
     
     var Renderer = new ASCII({
       el: document.getElementById('main'),
-      webcam: true
+      webcam: true,
+      frameSkip: 3,
+      callback: function(asciiString){
+        document.getElementById('ascii').innerHTML = asciiString;
+      }
     });
 
     Renderer.then(function (data) {

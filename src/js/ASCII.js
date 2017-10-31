@@ -11,7 +11,7 @@ function ASCII(opts) {
   _self.asciiLength = _self.asciiChars.length - 1;
 
   // Frames
-  _self.frameSkip = 3;
+  _self.frameSkip = _options.frameSkip || 3;
   _self.currentFrame = 0;
 
   return new Promise(function (resolve, reject) {
@@ -19,6 +19,8 @@ function ASCII(opts) {
     // Check for if element is decleared
     if (_options.el === undefined || _options.el === null) {
       reject("No element declared");
+    } else if (typeof _options.callback != 'function' && typeof _options.callback != 'undefined') {
+      reject("Callback is not a function");
     } else {
 
       if (_options.el.nodeName === 'IMG') {
@@ -111,7 +113,7 @@ ASCII.prototype = {
         this.imageData = this.ctx.getImageData(0, 0, this.width, this.height).data;
 
         var asciiStr = this.getAsciiString();
-        document.getElementById('ascii').innerHTML = asciiStr;
+        this.options.callback(asciiStr);
 
       }
 
@@ -124,7 +126,6 @@ ASCII.prototype = {
 
       // Render
       window.requestAnimationFrame(this.render.bind(this));
-
 
     }
   },
